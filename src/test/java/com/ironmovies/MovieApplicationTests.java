@@ -3,6 +3,7 @@ package com.ironmovies;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.ironmovies.models.Movie;
+import com.ironmovies.models.ResultsPage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,11 @@ public class MovieApplicationTests {
 
     @Test
     public void apiTestTest() throws Exception {
-        List<Movie> result = this.restTemplate.getForObject("http://localhost:" + port + "/",
-                List.class);
-        Movie movieResult = result.get(0);
-        assertThat(result.size() > 0);
+        ResultsPage result = this.restTemplate.getForObject("http://localhost:" + port + "/apitest",
+                ResultsPage.class);
+        assertThat(result.getResults().size() > 0);
+
+        Movie movieResult = result.getResults().get(0);
         assertThat(movieResult.getTitle().equals("my apiTest Title"));
     }
 

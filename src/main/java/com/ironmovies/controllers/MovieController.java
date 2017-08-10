@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 @RestController
 public class MovieController {
-    List<Movie> movies = new ArrayList();
     static final String API_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=be2a38521a7859c95e2d73c48786e4bb";
 
     @GetMapping("/")
@@ -25,14 +24,20 @@ public class MovieController {
     }
 
     @GetMapping("/apitest")
-    public List<Movie> apiTest(){
+    public ResultsPage apiTest(){
+        return generateMovies();
+    }
+
+    private ResultsPage generateMovies() {
+        ResultsPage resultsPage = new ResultsPage();
+        resultsPage.setResults(new ArrayList());
         Movie movie1 = new Movie();
         movie1.setOverview("my overview");
         movie1.setPopularity(99.0);
         movie1.setPosterPath("https://yt3.ggpht.com/-Yai9Hqhjdl8/AAAAAAAAAAI/AAAAAAAAAAA/DdqlORbBBPQ/s900-c-k-no-mo-rj-c0xffffff/photo.jpg");
         movie1.setTitle("my apiTest Title");
-        movies.add(movie1);
-        return movies;
+        resultsPage.getResults().add(movie1);
+        return resultsPage;
     }
 
     @CrossOrigin(origins = "http://www.unrentedforest.surge.sh/")
